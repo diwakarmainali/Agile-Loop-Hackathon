@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Jira Issue</title>
+</head>
+<body>
+    <h1>Create a New Jira Issue</h1>
+    <form id="createIssueForm" method="POST">
+        {% csrf_token %}
+        <label for="summary">Summary:</label><br>
+        <input type="text" id="summary" name="summary"><br>
+        <label for="description">Description:</label><br>
+        <input type="text" id="description" name="description"><br><br>
+        <input type="submit" value="Create Issue">
+    </form>
+    <div id="response"></div>
+    <script>
+        document.getElementById('createIssueForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const summary = document.getElementById('summary').value;
+            const description = document.getElementById('description').value;
+
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            const response = await fetch('/jira/create-jira-issue/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({ summary, description })
+            });
+
+            const result = await response.json();
+            document.getElementById('response').innerText = `Issue ${result.key} created with summary: ${result.summary}`;
+        });
+    </script>
+</body>
+</html>

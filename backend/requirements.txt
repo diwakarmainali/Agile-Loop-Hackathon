@@ -1,0 +1,16 @@
+pyyaml==6.0.1
+spotipy==2.23.0
+langchain
+colorama==0.4.6
+tiktoken
+openai
+mysql-connector-python
+langchain_openai
+langchain-google-genai
+requests
+python-dotenv
+django
+djangorestframework
+google-generativeai
+jira
+django-cors-headers
